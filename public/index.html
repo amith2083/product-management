@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Product Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">Product Management System</h1>
+            <div class="user-menu">
+                <span id="userName" class="user-name"></span>
+                <button id="logoutBtn" class="btn btn-secondary btn-sm">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+       
+
+        <!-- Products Tab -->
+        <div id="productsTab" class="tab-content active">
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-details">
+                        <h3 id="totalProducts">0</h3>
+                        <p>Total Products</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-details">
+                        <h3 id="totalValue">₹0.00</h3>
+                        <p>Total Inventory Value</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-details">
+                        <h3 id="totalQuantity">0</h3>
+                        <p>Total Stock Units</p>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Product Actions -->
+            <div class="product-actions">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search by name "
+                        class="form-control"
+                    >
+                </div>
+                <button id="addProductBtn" class="btn btn-primary">
+                    + Add Product
+                </button>
+            </div>
+
+            <!-- Products Table -->
+            <div class="table-container">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                              <th>Status</th> 
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <tr>
+                            <td colspan="8" class="text-center">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination" class="pagination"></div>
+        </div>
+
+       
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Product</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">Product Name *</label>
+                        <input 
+                            type="text" 
+                            id="productName" 
+                            class="form-control"
+                            required
+                        >
+                    </div>
+                   
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea 
+                        id="productDescription" 
+                        class="form-control"
+                        rows="3"
+                    ></textarea>
+                </div>
+                <div class="form-group">
+    <label for="productImage">Product Image</label>
+    <img
+  id="imagePreview"
+  src=""
+  alt="Preview"
+  style="display:none;width:100px;height:100px;object-fit:cover;border-radius:8px;margin-bottom:10px;"
+>
+    <input 
+        type="file" 
+        id="productImage" 
+        class="form-control"
+        accept="image/*"
+    >
+</div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productPrice">Price (₹) *</label>
+                        <input 
+                            type="number" 
+                            id="productPrice" 
+                            class="form-control"
+                            step="0.01"
+                            min="0"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="productQuantity">Quantity *</label>
+                        <input 
+                            type="number" 
+                            id="productQuantity" 
+                            class="form-control"
+                            min="0"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productCategory">Category</label>
+                    <input 
+                        type="text" 
+                        id="productCategory" 
+                        class="form-control"
+                        placeholder="e.g., Electronics, Clothing, Food"
+                    >
+                </div>
+                <div class="form-group" id="statusGroup" style="display:none;">
+  <label>Product Status</label>
+  <select id="productStatus" class="form-control">
+    <option value=1>Active</option>
+    <option value=0>Inactive</option>
+  </select>
+</div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="saveProductBtn">
+                        <span class="btn-text">Save Product</span>
+                        <span class="btn-loader" style="display: none;">
+                            <span class="spinner"></span> Saving...
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

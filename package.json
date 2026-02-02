@@ -1,0 +1,23 @@
+{
+  "name": "product-management",
+  "version": "1.0.0",
+  "description": "A comprehensive, production-ready product management system built with Node.js, Express, MySQL, and vanilla JavaScript. This application provides complete CRUD operations for products, user authentication, and detailed analytics reporting.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "multer": "^2.0.2",
+    "mysql2": "^3.16.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
