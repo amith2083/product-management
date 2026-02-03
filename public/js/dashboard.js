@@ -104,26 +104,17 @@ async function handleLogout() {
 
 async function loadStatistics() {
   try {
-   const response = await fetch("/api/reports/summary");
-
-    if (!response.success) throw new Error("Failed to fetch stats");
-
+    const response = await fetch("/api/reports/summary");
     const data = await response.json();
 
-    const stats = data?.data || {};
-
-    elements.totalProducts.textContent = stats.totalProducts ?? 0;
-    elements.totalQuantity.textContent = stats.totalQuantity ?? 0;
-    elements.totalValue.textContent =
-      "₹" + Number(stats.totalValue ?? 0).toLocaleString("en-IN");
-
+    if (data.success) {
+      elements.totalProducts.textContent = data.data.totalProducts;
+      elements.totalQuantity.textContent = data.data.totalQuantity;
+      elements.totalValue.textContent =
+        "₹" + Number(data.data.totalValue).toLocaleString("en-IN");
+    }
   } catch (error) {
     console.error("Statistics error:", error);
-      //  Fallback UI
-    elements.totalProducts.textContent = "—";
-    elements.totalQuantity.textContent = "—";
-    elements.totalValue.textContent = "₹—";
-  
   }
 }
 
@@ -152,7 +143,7 @@ async function loadProducts() {
   }
 }
 
-function displayProducts(products=[]) {
+function displayProducts(products) {
   if (products.length === 0) {
     elements.productsTableBody.innerHTML = `
             <tr><td colspan="8" class="text-center">No products found</td></tr>
