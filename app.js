@@ -35,7 +35,13 @@ app.get("/", (req, res) => {
 // ---------- API ROUTES ----------
 app.use("/api/products", productRouter);
 app.use("/api/reports", reportRouter);
-
+// ------------------- 404 HANDLER -------------------
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
 // ---------- GLOBAL ERROR HANDLER ----------
 app.use((err, req, res, next) => {
   console.error("Global Error:", err.message);

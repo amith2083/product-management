@@ -14,10 +14,8 @@ let currentProductId = null;
 
 // DOM Elements
 const elements = {
-
-//logout
+  //logout
   logoutBtn: document.getElementById("logoutBtn"),
- 
 
   // Statistics
   totalProducts: document.getElementById("totalProducts"),
@@ -58,13 +56,10 @@ const elements = {
 // Initialize dashboard on page load
 
 document.addEventListener("DOMContentLoaded", async function () {
- 
   initializeEventListeners();
   loadProducts();
   loadStatistics();
 });
-
-
 
 //Initialize all event listeners
 function initializeEventListeners() {
@@ -91,8 +86,6 @@ function initializeEventListeners() {
     }
   });
 }
-
-
 
 async function handleLogout() {
   localStorage.removeItem("isAdminLoggedIn");
@@ -318,8 +311,8 @@ async function deleteProduct(id) {
     const response = await fetch(`/api/products/${id}`, {
       method: "DELETE",
       headers: {
-    "x-admin-auth": localStorage.getItem("isAdminLoggedIn"),
-  },
+        "x-admin-auth": localStorage.getItem("isAdminLoggedIn"),
+      },
     });
 
     const data = await response.json();
@@ -372,8 +365,8 @@ async function handleProductSubmit(e) {
     const response = await fetch(url, {
       method: method,
       headers: {
-    "x-admin-auth": localStorage.getItem("isAdminLoggedIn"),
-  },
+        "x-admin-auth": localStorage.getItem("isAdminLoggedIn"),
+      },
       body: formData,
     });
 
@@ -414,8 +407,6 @@ function closeModal() {
   //  RESET FILE INPUT
   elements.productImage.value = "";
 }
-
-
 
 //Show toast notification
 

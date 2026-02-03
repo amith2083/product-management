@@ -1,5 +1,5 @@
 import pool from "../config/dbConnect.js";
-
+//---------------------------create product------------------------------------------------------------------------
 export const createProduct = async (req, res) => {
   try {
     const {
@@ -10,8 +10,15 @@ export const createProduct = async (req, res) => {
       stock_quantity,
     } = req.body;
     // Validation
-    if (!name || !price || !stock_quantity || !category) {
+    if (!name || !price || !stock_quantity || !category || !req.file) {
       const err = new Error("Required fields missing");
+      err.status = 400;
+      throw err;
+    }
+    if (price <= 0 || stock_quantity < 0) {
+      const err = new Error(
+        "Invalid input: price must be > 0 and stock quantity must be ≥ 0",
+      );
       err.status = 400;
       throw err;
     }
@@ -26,7 +33,7 @@ export const createProduct = async (req, res) => {
       throw err;
     }
     let image = null;
-    console.log("req.file", req.file);
+  
     if (req.file) {
       image = `/uploads/${req.file.filename}`;
     }
@@ -65,7 +72,7 @@ export const createProduct = async (req, res) => {
     throw error;
   }
 };
-
+//---------------------------get all products------------------------------------------------------------------------
 export const getAllProducts = async (req, res) => {
   try {
     let { page = 1, limit = 10, search = "" } = req.query;
@@ -79,7 +86,7 @@ export const getAllProducts = async (req, res) => {
 
     const offset = (page - 1) * limit;
 
-    let whereClause = "";
+  let whereClause = "WHERE 1=1";
     let params = [];
 
     if (search) {
@@ -123,6 +130,7 @@ export const getAllProducts = async (req, res) => {
     throw error;
   }
 };
+//---------------------------get product by id------------------------------------------------------------------------
 export const getProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -152,7 +160,7 @@ export const getProduct = async (req, res) => {
     throw error;
   }
 };
-
+//---------------------------update product------------------------------------------------------------------------
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -211,7 +219,7 @@ export const updateProduct = async (req, res) => {
     throw error;
   }
 };
-
+//---------------------------delete product------------------------------------------------------------------------
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
