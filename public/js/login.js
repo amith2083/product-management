@@ -1,3 +1,10 @@
+(function preventLoginAccess() {
+  const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
+
+  if (isLoggedIn === "true") {
+    window.location.replace("/");
+  }
+})();
 document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
   const elements = {
