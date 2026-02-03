@@ -119,7 +119,7 @@ export const getAllProducts = async (req, res) => {
     });
   } catch (error) {
     console.error("Fetch products error:", error);
-         error.status = error.status || 500;
+    error.status = error.status || 500;
     throw error;
   }
 };
@@ -137,9 +137,9 @@ export const getProduct = async (req, res) => {
     );
 
     if (rows.length === 0) {
-     const err = new Error("Product not found");
-  err.status = 404;
-  throw err;
+      const err = new Error("Product not found");
+      err.status = 404;
+      throw err;
     }
 
     res.status(200).json({
@@ -148,9 +148,8 @@ export const getProduct = async (req, res) => {
     });
   } catch (error) {
     console.error("Get product error:", error);
-         error.status = error.status || 500;
+    error.status = error.status || 500;
     throw error;
-   
   }
 };
 
@@ -160,9 +159,9 @@ export const updateProduct = async (req, res) => {
 
     const { name, description, price, category, stock_quantity, is_active } =
       req.body;
-const [existing] = await pool.execute(
+    const [existing] = await pool.execute(
       `SELECT id FROM products WHERE name = ? AND id != ? `,
-      [name,id],
+      [name, id],
     );
 
     if (existing.length > 0) {
@@ -199,18 +198,17 @@ const [existing] = await pool.execute(
     values.push(id);
     const [result] = await pool.execute(sql, values);
 
-   if (result.affectedRows === 0) {
-  const err = new Error("Product not found");
-  err.status = 404;
-  throw err;
-}
+    if (result.affectedRows === 0) {
+      const err = new Error("Product not found");
+      err.status = 404;
+      throw err;
+    }
 
     res.json({ success: true, message: "Product updated successfully" });
   } catch (error) {
     console.error("Update product error:", error);
-      error.status = error.status || 500;
+    error.status = error.status || 500;
     throw error;
-    
   }
 };
 
@@ -226,15 +224,15 @@ export const deleteProduct = async (req, res) => {
     );
 
     if (result.affectedRows === 0) {
-    const err = new Error("Product not found");
-  err.status = 404;
-  throw err;
+      const err = new Error("Product not found");
+      err.status = 404;
+      throw err;
     }
 
     res.json({ success: true, message: "Product deleted successfully" });
   } catch (error) {
     console.error("Soft delete error:", error);
-        error.status = error.status || 500;
+    error.status = error.status || 500;
     throw error;
   }
 };

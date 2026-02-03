@@ -1,4 +1,11 @@
+//  Frontend page protection
+(function checkAuth() {
+  const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
 
+  if (isLoggedIn !== "true") {
+    window.location.href = "/login";
+  }
+})();
 // Global state
 let currentPage = 1;
 let searchTerm = "";
@@ -90,7 +97,7 @@ function initializeEventListeners() {
 async function handleLogout() {
   localStorage.removeItem("isAdminLoggedIn");
   localStorage.removeItem("adminUser");
-  window.location.href = "/login.html";
+  window.location.href = "/login";
 }
 
 //Load statistics
@@ -310,6 +317,9 @@ async function deleteProduct(id) {
   try {
     const response = await fetch(`/api/products/${id}`, {
       method: "DELETE",
+      headers: {
+    "x-admin-auth": localStorage.getItem("isAdminLoggedIn"),
+  },
     });
 
     const data = await response.json();
@@ -361,6 +371,9 @@ async function handleProductSubmit(e) {
 
     const response = await fetch(url, {
       method: method,
+      headers: {
+    "x-admin-auth": localStorage.getItem("isAdminLoggedIn"),
+  },
       body: formData,
     });
 

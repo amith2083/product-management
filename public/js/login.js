@@ -8,12 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     toast: document.getElementById("toast"),
   };
 
-  // Guard: already logged in
-  const isLoggedIn = localStorage.getItem("isAdminLoggedIn");
-  if (isLoggedIn) {
-    window.location.href = "/";
-    return;
-  }
+
 
   // Events
   elements.loginForm.addEventListener("submit", handleLogin);

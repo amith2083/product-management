@@ -1,27 +1,42 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import { dbConnect } from './config/dbConnect.js';
-import productRouter from './routes/productRoutes.js';
-import reportRouter from './routes/reportRoutes.js';
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dbConnect } from "./config/dbConnect.js";
+import productRouter from "./routes/productRoutes.js";
+import reportRouter from "./routes/reportRoutes.js";
 
 dotenv.config();
 const app = express();
 const PORT = 3000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 await dbConnect();
 
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+// Serve ONLY static assets (css, js, images)
+app.use(express.static(path.join(__dirname, "public")));
 
-// routes
-app.use('/api/products', productRouter);
-app.use('/api/reports', reportRouter);
+// ---------- PAGE ROUTES ----------
 
+// Login page
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "login.html"));
+});
 
-   //GLOBAL ERROR HANDLER
-  
+// Dashboard page
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "dashboard.html"));
+});
+
+// ---------- API ROUTES ----------
+app.use("/api/products", productRouter);
+app.use("/api/reports", reportRouter);
+
+// ---------- GLOBAL ERROR HANDLER ----------
 app.use((err, req, res, next) => {
   console.error("Global Error:", err.message);
 
